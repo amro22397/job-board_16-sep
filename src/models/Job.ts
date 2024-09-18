@@ -1,5 +1,14 @@
 import { model, models, Schema } from 'mongoose'
 
+export type job = {
+    title: string, remote: string, type: string, salary: number, country: string, state: string,
+    city: string, JobIcon: string, orgId: string, contactPhoto: string, contactName: string,
+    orgName: string, contactPhone: string, contactEmail: string, description: string,
+    createdAt: string, updatedAt: string, _id: string,
+    isAdmin: boolean,
+    __v: number, 
+}
+
 const JobSchema = new Schema({
     title: {
         type: String,
@@ -45,6 +54,6 @@ const JobSchema = new Schema({
         type: String,
         required: true,
     },
-})
+}, {timestamps: true})
 
 export const JobModel = models?.Job || model('Job', JobSchema)
