@@ -7,22 +7,42 @@ import {
     StateSelect,
   } from "react-country-state-city";
   import { useState } from 'react';
+import ImageUpload from './ImageUpload';
+import { saveJobAction } from '../actions/JobActions';
+import { redirect } from 'next/navigation';
 
-const JobForm = () => {
+const JobForm = ({orgId}: {orgId: string}) => {
     const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
+  const [cityId, setCityId] = useState(0);
+
+
+  const [country, setCountry] = useState('');
+  const [state, setState] = useState('');
+  const [city, setCity] = useState('');
+
+  async function handleSaveJob(data: FormData) {
+    data.set('country', country.toString());
+    data.set('state', state.toString());
+    data.set('city', city.toString());
+    data.set('orgId', orgId);
+    const jobDoc = await saveJobAction(data);
+    redirect(`/jobs/${jobDoc.orgId}`);
+  }
 
   return (
     <Theme >
-    <form action="" className="container flex flex-col gap-4 mt-6">
+    <form action={handleSaveJob} className="container flex flex-col gap-4 mt-6">
 
-        <TextField.Root placeholder='Job title' />
+        <TextField.Root placeholder='Job title' id="title"
+        name="title" />
 
         
             <div className="grid grid-cols-3 gap-6 *:grow">
                 <div className="">
                 Remote?
-                <RadioGroup.Root defaultValue='hybrid' name="example">
+                <RadioGroup.Root defaultValue='hybrid' name="remote"
+                >
                     <RadioGroup.Item value='onsite'>On-site</RadioGroup.Item>
                     <RadioGroup.Item value='hybrid'>Hybrid-remote</RadioGroup.Item>
                     <RadioGroup.Item value='remote'>Fully remote</RadioGroup.Item>
@@ -31,7 +51,8 @@ const JobForm = () => {
 
                 <div className="">
                 Full time ?
-                <RadioGroup.Root defaultValue='full' name='example'>
+                <RadioGroup.Root defaultValue='full' name='type'
+                >
                     <RadioGroup.Item value='project'>Project</RadioGroup.Item>
                     <RadioGroup.Item value='part'>Part-time</RadioGroup.Item>
                     <RadioGroup.Item value='full'>Full-time</RadioGroup.Item>
@@ -39,8 +60,9 @@ const JobForm = () => {
             </div>
             </div>
 
-            <div className="">
-                <TextField.Root>
+            <div className="" >
+                <TextField.Root name='salary'
+                id='salary'>
                     <TextField.Slot>
                         $
                     </TextField.Slot>
@@ -57,24 +79,33 @@ const JobForm = () => {
 
         <div className="flex gap-4 *:grow">
         <CountrySelect
-onChange={(e) => {
-setCountryid(e.id);
-}}
-placeHolder="Select Country"
+        id='country'
+        onChange={(e:any) => {
+            setCountryid(e.id);
+            setCountry(e.name);
+        }}
+        placeHolder="Select Country"
 />
+
 <StateSelect
+id="state"
 countryid={countryid}
-onChange={(e) => {
+onChange={(e:any) => {
 setstateid(e.id);
+setState(e.name)
+
 }}
 placeHolder="Select State"
 />
 <CitySelect
+id="city"
 countryid={countryid}
 stateid={stateid}
-onChange={(e) => {
-console.log(e);
-}}
+onChange={(e:any) => {
+    setCityId(e.id);
+    setCity(e.name)
+    
+    }}
 placeHolder="Select City"
 />
 
@@ -85,14 +116,8 @@ placeHolder="Select City"
         <div className="flex">
             <div className="w-1/3">
                 <h3>Job icon</h3>
-                <div className="bg-gray-100 rounded-md size-24
-                inline-flex items-center content-center justify-center">
-                    <i className="fa-solid fa-star text-gray-400"></i>
-                </div>
 
-                <div className="mt-2">
-                    <Button>select file</Button>
-                </div>
+                    <ImageUpload name='JobIcon' icon={`fa-solid fa-star`} />
             </div>
 
             <div className='grow'>
@@ -101,29 +126,24 @@ placeHolder="Select City"
              <div className="flex gap-2">
 
                 <div className="">
-                    <div className="bg-gray-100 rounded-md size-24 inline-flex items-center content-center justify-center">
-                        <i className="fa-solid fa-user text-gray-400"></i>
-                    </div>
-
-                  <div className="mt-2">
-                    <Button>select file</Button>
-                  </div>
+                    
+                    <ImageUpload name='contactPhoto' icon={`fa-solid fa-user`} />
               </div>
 
                     <div className="grow flex flex-col gap-1">
-                    <TextField.Root placeholder='Jhon Doe'>
+                    <TextField.Root placeholder='name' name='contactName'>
                         <TextField.Slot>
                         <i className="fa-solid fa-user text-gray-400"></i>
                         </TextField.Slot>
                     </TextField.Root>
 
-                    <TextField.Root placeholder='phone' type='tel'>
+                    <TextField.Root placeholder='phone' type='tel' name='contactPhone'>
                         <TextField.Slot>
                         <i className="fa-solid fa-phone"></i>
                         </TextField.Slot>
                     </TextField.Root>
 
-                    <TextField.Root placeholder='Email' type='email'>
+                    <TextField.Root placeholder='Email' type='email' name='contactEmail'>
                         <TextField.Slot>
                         <i className="fa-solid fa-envelope"></i>
                         </TextField.Slot>
@@ -135,7 +155,8 @@ placeHolder="Select City"
          </div>
         </div>
 
-        <TextArea placeholder='Job description' resize='vertical' />
+        <TextArea id="description"
+        placeholder='Job description' resize='vertical' name='description' />
         
         <div className="">
             <Button size='3'>
