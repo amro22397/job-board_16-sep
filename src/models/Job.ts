@@ -2,14 +2,17 @@ import { model, models, Schema } from 'mongoose'
 
 export type job = {
     title: string, remote: string, type: string, salary: number, country: string, state: string,
-    city: string, JobIcon: string, orgId: string, contactPhoto: string, contactName: string,
+    city: string, countryid: string, stateid: string, cityId: string,  JobIcon: string, orgId: string, contactPhoto: string, contactName: string,
     orgName: string, contactPhone: string, contactEmail: string, description: string,
     createdAt: string, updatedAt: string, _id: string,
-    isAdmin: boolean,
-    __v: number, 
+    isAdmin: boolean, id: string,
+    __v: number
 }
 
 const JobSchema = new Schema({
+    id: {
+        type: String,
+    },
     title: {
         type: String,
         required: true,
@@ -35,6 +38,18 @@ const JobSchema = new Schema({
         required: true,
     },
     city: {
+        type: String,
+        required: true,
+    },
+    countryid: {
+        type: String,
+        required: true,
+    },
+    stateid: {
+        type: String,
+        required: true,
+    },
+    cityId: {
         type: String,
         required: true,
     },

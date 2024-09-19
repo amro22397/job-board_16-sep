@@ -1,0 +1,7 @@
+.div-time div {
+    @apply grid grid-cols-1;
+}
+
+.div-time div span {
+    @apply font-semibold text-black;
+}

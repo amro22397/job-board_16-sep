@@ -3,15 +3,8 @@
 import { getUser } from '@workos-inc/authkit-nextjs';
 import { WorkOS } from '@workos-inc/node';
 import '@radix-ui/themes/styles.css';
-import { RadioGroup, TextField, Theme } from '@radix-ui/themes';
-import {
-    CitySelect,
-    CountrySelect,
-    StateSelect,
-  } from "react-country-state-city";
-  import "react-country-state-city/dist/react-country-state-city.css";
+import "react-country-state-city/dist/react-country-state-city.css";
 import JobForm from '@/app/components/JobForm';
-import { saveJobAction } from '@/app/actions/JobActions';
   
 
 type PageProps = {
@@ -42,7 +35,7 @@ const page = async (props: PageProps) => {
     }
     
   return (
-    <JobForm orgId={orgId} />
+    <JobForm editJobDoc={null} orgId={orgId} />
   )
 }
 

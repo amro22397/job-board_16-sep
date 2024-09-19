@@ -1,11 +1,36 @@
 
+'use client'
+
 import React from 'react'
 import TimeAgoFun from './TimeAgoFun'
-import { job } from '@/models/Job'
+import { job, JobModel } from '@/models/Job'
 import Link from 'next/link'
+import mongoose from 'mongoose'
+import { revalidatePath } from 'next/cache'
+import DeletionButton from './DeletionButton'
+import { useRouter } from 'next/navigation'
 
 
 const JobRow = async ({jobDoc}: {jobDoc: job}) => {
+
+    const route = useRouter();
+
+
+    const handleDelete = async () => {
+        
+        confirm('Are you sure you want to delete this job ?')
+
+        const res = await fetch('/api/jobs?_id='+jobDoc._id, {
+            method: 'DELETE'
+        });
+
+        if (res.ok) {
+            route.push(`/jobs/${jobDoc.orgId}`)
+            window.location.reload();
+        } else {
+            alert('Error deleting job')
+        }
+    }
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm relative">
@@ -32,7 +57,9 @@ const JobRow = async ({jobDoc}: {jobDoc: job}) => {
                 <button className="text-green-500">Edit</button>
                 </Link>
                
-                <button className="text-red-600">Delete</button>
+               <DeletionButton onClick={handleDelete} />
+
+                
             </div>
           </div>
 

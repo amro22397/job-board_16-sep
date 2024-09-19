@@ -7,8 +7,8 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import { UploadButton } from '@/utils/uploadthing'
 
-const ImageUpload = ({icon, name}: { 
-  icon: string, name: string,
+const ImageUpload = ({JobIconImage, icon, name}: { 
+  JobIconImage: string, icon: string, name: string,
 }) => {
     const [image, setImage] = useState<string>('');
     const fileInRef = useRef<HTMLInputElement>(null);
@@ -33,17 +33,20 @@ const ImageUpload = ({icon, name}: {
   return (
     <>
     <div className="bg-gray-100 rounded-md size-24 inline-flex items-center content-center justify-center">
-                        {image && (
+                        {image ? (
                           <Image src={image} alt='image' width={1024} height={1024}
+                          className='w-auto h-auto max-w-24 max-h-24' />
+                        ) : JobIconImage && (
+                          <Image src={JobIconImage} alt='image' width={1024} height={1024}
                           className='w-auto h-auto max-w-24 max-h-24' />
                         )}
 
-                        {!image && (
+                        {!image || !JobIconImage && (
                           <i className={`${icon} text-gray-400`}></i>
                         )}
                     </div>
 
-                    <input type="hidden" name={name} value={image} />
+                    <input type="hidden" name={name} value={image || JobIconImage} />
 
                   <div className="flex justify-start items-start mt-2">
 

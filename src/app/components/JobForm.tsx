@@ -10,21 +10,25 @@ import {
 import ImageUpload from './ImageUpload';
 import { saveJobAction } from '../actions/JobActions';
 import { redirect } from 'next/navigation';
+import type { job } from '@/models/Job';
 
-const JobForm = ({orgId}: {orgId: string}) => {
-    const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
-  const [cityId, setCityId] = useState(0);
+const JobForm = ({editJobDoc, orgId}: {editJobDoc?: job | null,orgId: string}) => {
+    const [countryid, setCountryid] = useState(editJobDoc?.countryid || 0);
+  const [stateid, setstateid] = useState(editJobDoc?.stateid || 0);
+  const [cityId, setCityId] = useState(editJobDoc?.cityId || 0);
 
 
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
-  const [city, setCity] = useState('');
+  const [country, setCountry] = useState(editJobDoc?.country || '');
+  const [state, setState] = useState(editJobDoc?.state || '');
+  const [city, setCity] = useState(editJobDoc?.city || '');
 
   async function handleSaveJob(data: FormData) {
     data.set('country', country.toString());
     data.set('state', state.toString());
     data.set('city', city.toString());
+    data.set('countryid', countryid.toString());
+    data.set('stateid', stateid.toString());
+    data.set('cityId', cityId.toString());
     data.set('orgId', orgId);
     const jobDoc = await saveJobAction(data);
     redirect(`/jobs/${jobDoc.orgId}`);
@@ -34,14 +38,20 @@ const JobForm = ({orgId}: {orgId: string}) => {
     <Theme >
     <form action={handleSaveJob} className="container flex flex-col gap-4 mt-6">
 
+        {editJobDoc && (
+            <input type="hidden" name='id' value={editJobDoc._id} />
+        )}
+
         <TextField.Root placeholder='Job title' id="title"
-        name="title" />
+        name="title" defaultValue={editJobDoc ? editJobDoc.title : ""} />
 
         
             <div className="grid grid-cols-3 gap-6 *:grow">
                 <div className="">
                 Remote?
-                <RadioGroup.Root defaultValue='hybrid' name="remote"
+                
+                <RadioGroup.Root name="remote"
+                defaultValue={editJobDoc ? editJobDoc.remote : "hybrid"}
                 >
                     <RadioGroup.Item value='onsite'>On-site</RadioGroup.Item>
                     <RadioGroup.Item value='hybrid'>Hybrid-remote</RadioGroup.Item>
@@ -51,7 +61,8 @@ const JobForm = ({orgId}: {orgId: string}) => {
 
                 <div className="">
                 Full time ?
-                <RadioGroup.Root defaultValue='full' name='type'
+                <RadioGroup.Root name='type'
+                defaultValue={editJobDoc ? editJobDoc.type : "full"}
                 >
                     <RadioGroup.Item value='project'>Project</RadioGroup.Item>
                     <RadioGroup.Item value='part'>Part-time</RadioGroup.Item>
@@ -61,7 +72,7 @@ const JobForm = ({orgId}: {orgId: string}) => {
             </div>
 
             <div className="" >
-                <TextField.Root name='salary'
+                <TextField.Root name='salary' defaultValue={editJobDoc ? editJobDoc.salary : ""}
                 id='salary'>
                     <TextField.Slot>
                         $
@@ -79,16 +90,19 @@ const JobForm = ({orgId}: {orgId: string}) => {
 
         <div className="flex gap-4 *:grow">
         <CountrySelect
+        defaultValue={editJobDoc ? {id: countryid, name: country} : ''}
         id='country'
         onChange={(e:any) => {
             setCountryid(e.id);
-            setCountry(e.name);
+            setCountry(e.name)
         }}
+
         placeHolder="Select Country"
 />
 
 <StateSelect
 id="state"
+defaultValue={editJobDoc ? {id: stateid, name: state} : ''}
 countryid={countryid}
 onChange={(e:any) => {
 setstateid(e.id);
@@ -99,6 +113,7 @@ placeHolder="Select State"
 />
 <CitySelect
 id="city"
+defaultValue={editJobDoc ? {id: cityId, name: city} : ''}
 countryid={countryid}
 stateid={stateid}
 onChange={(e:any) => {
@@ -117,7 +132,8 @@ placeHolder="Select City"
             <div className="w-1/3">
                 <h3>Job icon</h3>
 
-                    <ImageUpload name='JobIcon' icon={`fa-solid fa-star`} />
+                    <ImageUpload JobIconImage={editJobDoc ? editJobDoc.JobIcon : ''}
+                    name='JobIcon' icon={`fa-solid fa-star`} />
             </div>
 
             <div className='grow'>
@@ -127,23 +143,27 @@ placeHolder="Select City"
 
                 <div className="">
                     
-                    <ImageUpload name='contactPhoto' icon={`fa-solid fa-user`} />
+                    <ImageUpload JobIconImage={editJobDoc ? editJobDoc.contactPhoto : ''}
+                    name='contactPhoto' icon={`fa-solid fa-user`} />
               </div>
 
                     <div className="grow flex flex-col gap-1">
-                    <TextField.Root placeholder='name' name='contactName'>
+                    <TextField.Root placeholder='name' name='contactName'
+                    defaultValue={editJobDoc ? editJobDoc.contactName : ""}>
                         <TextField.Slot>
                         <i className="fa-solid fa-user text-gray-400"></i>
                         </TextField.Slot>
                     </TextField.Root>
 
-                    <TextField.Root placeholder='phone' type='tel' name='contactPhone'>
+                    <TextField.Root placeholder='phone' type='tel' name='contactPhone'
+                    defaultValue={editJobDoc ? editJobDoc.contactPhone : ""}>
                         <TextField.Slot>
                         <i className="fa-solid fa-phone"></i>
                         </TextField.Slot>
                     </TextField.Root>
 
-                    <TextField.Root placeholder='Email' type='email' name='contactEmail'>
+                    <TextField.Root placeholder='Email' type='email' name='contactEmail'
+                    defaultValue={editJobDoc ? editJobDoc.contactEmail : ""}>
                         <TextField.Slot>
                         <i className="fa-solid fa-envelope"></i>
                         </TextField.Slot>
@@ -156,10 +176,11 @@ placeHolder="Select City"
         </div>
 
         <TextArea id="description"
-        placeholder='Job description' resize='vertical' name='description' />
+        placeholder='Job description' resize='vertical' name='description'
+        defaultValue={editJobDoc ? editJobDoc.description : ""} />
         
         <div className="">
-            <Button size='3'>
+            <Button type='submit' size='3'>
                 <span className="px-8">Save</span>
             </Button>
         </div>

@@ -1047,6 +1047,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-timeago@^4.1.7":
+  version "4.1.7"
+  resolved "https://registry.npmjs.org/@types/react-timeago/-/react-timeago-4.1.7.tgz"
+  integrity sha512-ogD4Ror/hDG+pQggCX+TgPgJ8W2jeeUxsgNU485Qpm0Ma+E2TND2EJuKwK5+sxlkDXDEgsHradO0zWBkTgLzNg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.8.0 || ^17.0.0 || ^18.0.0", "@types/react@^16.9.0 || ^17.0.0 || ^18.0.0", "@types/react@^18":
   version "18.3.6"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.3.6.tgz"
