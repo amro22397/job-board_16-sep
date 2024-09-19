@@ -1,5 +1,3 @@
-'use client'
-
 import { getUser } from '@workos-inc/authkit-nextjs';
 import React from 'react'
 import { createCompany } from '../actions/workosActions';
@@ -9,7 +7,6 @@ const page = async () => {
 
     const { user } = await getUser();
 
-    const route = useRouter();
 
 
     const handleNewCompanyFormSubmit = async (data:FormData) => {
@@ -20,7 +17,11 @@ const page = async () => {
     }
 
     if (!user) {
-        route.push('/login');
+        return (
+            <div className="text-center text-xl font-semibold my-20">
+                 <div>You need to be logged in to post a job !</div>
+             </div>
+             )
     }
 
 

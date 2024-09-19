@@ -15,6 +15,7 @@ const JobRow = async ({jobDoc}: {jobDoc: job}) => {
 
     const route = useRouter();
 
+    
 
     const handleDelete = async () => {
         

@@ -3,12 +3,16 @@ import Hero from './components/Hero'
 import Jobs from './components/Jobs'
 import { getUser } from '@workos-inc/authkit-nextjs'
 import { addOrgAndUserData, JobModel } from '@/models/Job'
-import Link from 'next/link'
+import mongoose from 'mongoose'
 
 
 const page = async () => {
+  
   const { user } = await getUser();
+
+  mongoose.connect(process.env.MONGO_URL as string);
   const latestJobs = await addOrgAndUserData(
+    
     await JobModel.find({}, {}, {limit:5, sort:'-createdAt'}),
     user,
   )
