@@ -7,8 +7,8 @@ import { job, JobModel } from '@/models/Job'
 import Link from 'next/link'
 import mongoose from 'mongoose'
 import { revalidatePath } from 'next/cache'
-import DeletionButton from './DeletionButton'
 import { useRouter } from 'next/navigation'
+import DeletionButton from './DeletionButton'
 
 
 const JobRow = async ({jobDoc}: {jobDoc: job}) => {
