@@ -15,8 +15,8 @@ const page = async () => {
       
     if (!user) {
         return (
-       <div className="container">
-            <div>You need to be logged in to post a job</div>
+       <div className="text-center text-xl font-semibold my-20">
+            <div>You need to be logged in to post a job !</div>
         </div>
         )
     }

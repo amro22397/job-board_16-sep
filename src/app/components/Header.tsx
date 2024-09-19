@@ -13,6 +13,8 @@ const Header = async () => {
           <div className="flex items-center justify-between mx-auto my-4">
             <Link href={'/'} className="font-bold text-xl">Job Board</Link>
 
+           
+
             <nav className="flex gap-2 items-center">
               {!user && (
                 <Link href={signInUrl} 

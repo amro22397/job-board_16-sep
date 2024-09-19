@@ -1,10 +1,15 @@
+'use client'
+
 import { getUser } from '@workos-inc/authkit-nextjs';
 import React from 'react'
 import { createCompany } from '../actions/workosActions';
+import { useRouter } from 'next/navigation';
 
 const page = async () => {
 
     const { user } = await getUser();
+
+    const route = useRouter();
 
 
     const handleNewCompanyFormSubmit = async (data:FormData) => {
@@ -15,7 +20,7 @@ const page = async () => {
     }
 
     if (!user) {
-        'Log In to use this page'
+        route.push('/login');
     }
 
 

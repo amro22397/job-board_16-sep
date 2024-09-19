@@ -41,6 +41,7 @@ const JobRow = async ({jobDoc}: {jobDoc: job}) => {
         <div className="absolute top-2 right-4">
         <i className="fa-regular fa-heart"></i>
         </div>
+        
         <div className="flex grow gap-4
         max-md:flex-col max-md:justify-center max-md:items-center">
 
@@ -53,8 +54,7 @@ const JobRow = async ({jobDoc}: {jobDoc: job}) => {
           <div className="grow max-md:flex max-md:flex-col max-md:justify-center max-md:items-center
         max-md:mx-auto">
             <div className="">
-            <Link href={`/jobs/${jobDoc.orgId}`} className="text-gray-500 text-sm
-            capitalize">{jobDoc.orgName}</Link>
+            <Link href={`/jobs/${jobDoc.orgId}`} className="text-gray-500 text-sm">{jobDoc.orgName}</Link>
             </div>
             <div className="font-bold text-lg mb-1">
                 <Link className='hover:underline' href={'/showJob/'+jobDoc._id}>{jobDoc.title}</Link>

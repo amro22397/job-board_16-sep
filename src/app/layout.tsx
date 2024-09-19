@@ -41,7 +41,7 @@ export default function RootLayout({
         {children}
 
         <footer className="container py-8 text-gray-500 text-center">
-          Job Board &copy; {new Date().getFullYear()} = All rights reserved
+          Job Board &copy; {new Date().getFullYear()} - All rights reserved
         </footer>
         </main>
       </body>
