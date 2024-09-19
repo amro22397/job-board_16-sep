@@ -1,5 +1,5 @@
 import Jobs from '@/app/components/Jobs';
-import { JobModel } from '@/models/Job';
+import { addOrgAndUserData, JobModel } from '@/models/Job';
 import { getUser } from '@workos-inc/authkit-nextjs';
 import { AutoPaginatable, OrganizationMembership, WorkOS } from '@workos-inc/node';
 import mongoose from 'mongoose';
@@ -16,25 +16,8 @@ const page = async (props: PageProps) => {
     const org = await workos.organizations.getOrganization(props.params.orgId);
 
     const {user} = await getUser(); 
-
-    await mongoose.connect(process.env.MONGO_URL as string);
-    const jobsDocs = JSON.parse(JSON.stringify(await JobModel.find({orgId: org.id})));
-
-    let oms:AutoPaginatable<OrganizationMembership>|null = null;
-    if (user) {
-      oms = await workos.userManagement.listOrganizationMemberships({
-        userId: user.id,
-      });
-    }
-
-    for (const job of jobsDocs) {
-        const org = await workos.organizations.getOrganization(job.orgId);
-        job.orgName = org.name;
-
-        if (oms && oms.data.length > 0) {
-          job.isAdmin = !!oms.data.find( om => om.organizationId === job.orgId)
-        }
-    }
+    let jobsDocs = JSON.parse(JSON.stringify(await JobModel.find({orgId: org.id}, {}, {sort: {createdAt: -1}})));
+    jobsDocs = await addOrgAndUserData(jobsDocs, user);
 
   return (
     <div>

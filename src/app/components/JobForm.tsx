@@ -36,7 +36,8 @@ const JobForm = ({editJobDoc, orgId}: {editJobDoc?: job | null,orgId: string}) =
 
   return (
     <Theme >
-    <form action={handleSaveJob} className="container flex flex-col gap-4 mt-6">
+    <form action={handleSaveJob} className="container flex flex-col gap-4 mt-6
+    max-lg:mt-8 ">
 
         {editJobDoc && (
             <input type="hidden" name='id' value={editJobDoc._id} />
@@ -53,9 +54,9 @@ const JobForm = ({editJobDoc, orgId}: {editJobDoc?: job | null,orgId: string}) =
                 <RadioGroup.Root name="remote"
                 defaultValue={editJobDoc ? editJobDoc.remote : "hybrid"}
                 >
-                    <RadioGroup.Item value='onsite'>On-site</RadioGroup.Item>
-                    <RadioGroup.Item value='hybrid'>Hybrid-remote</RadioGroup.Item>
-                    <RadioGroup.Item value='remote'>Fully remote</RadioGroup.Item>
+                    <RadioGroup.Item value='On-site'>On-site</RadioGroup.Item>
+                    <RadioGroup.Item value='Hybrid-remote'>Hybrid-remote</RadioGroup.Item>
+                    <RadioGroup.Item value='Fully remote'>Fully remote</RadioGroup.Item>
                 </RadioGroup.Root>
                 </div>
 
@@ -84,11 +85,12 @@ const JobForm = ({editJobDoc, orgId}: {editJobDoc?: job | null,orgId: string}) =
             </div>
         
 
-        <div className="">
+        <div className="my-2 max-md:my-6">
 
         <h2 className="mb-3 text-xl font-bold">Location</h2>
 
-        <div className="flex gap-4 *:grow">
+        <div className="flex gap-4 *:grow
+        max-md:flex-col ">
         <CountrySelect
         defaultValue={editJobDoc ? {id: countryid, name: country} : ''}
         id='country'
@@ -128,7 +130,8 @@ placeHolder="Select City"
         </div>
         </div>
 
-        <div className="flex">
+        <div className="flex max-md:flex-col max-md:justify-center max-md:mx-auto max-md:items-center
+        max-md:gap-10 max-md:mb-6">
             <div className="w-1/3">
                 <h3>Job icon</h3>
 
@@ -136,10 +139,10 @@ placeHolder="Select City"
                     name='JobIcon' icon={`fa-solid fa-star`} />
             </div>
 
-            <div className='grow'>
+            <div className='gro flex flex-col gap-3'>
                 <h3>Contact person</h3>
                 
-             <div className="flex gap-2">
+             <div className="flex gap-4">
 
                 <div className="">
                     

@@ -35,11 +35,12 @@ export default function RootLayout({
       >
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" ></link>
 
-        <main className="px-4 py-6">
+        <main className="px-4 py-6 max-w-[80%] mx-auto
+        max-md:max-w-[95%]">
         <Header />
         {children}
 
-        <footer className="container py-8 text-gray-500">
+        <footer className="container py-8 text-gray-500 text-center">
           Job Board &copy; {new Date().getFullYear()} = All rights reserved
         </footer>
         </main>

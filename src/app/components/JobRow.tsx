@@ -18,7 +18,9 @@ const JobRow = async ({jobDoc}: {jobDoc: job}) => {
 
     const handleDelete = async () => {
         
-        confirm('Are you sure you want to delete this job ?')
+        let result = confirm('Are you sure you want to delete this job ?')
+
+        if (!result) return
 
         const res = await fetch('/api/jobs?_id='+jobDoc._id, {
             method: 'DELETE'
@@ -39,20 +41,30 @@ const JobRow = async ({jobDoc}: {jobDoc: job}) => {
         <div className="absolute top-2 right-4">
         <i className="fa-regular fa-heart"></i>
         </div>
-        <div className="flex grow gap-4">
+        <div className="flex grow gap-4
+        max-md:flex-col max-md:justify-center max-md:items-center">
 
         <div className="content-center">
-            <img src={jobDoc.JobIcon} alt="image" className="size-12" />
+            <img src={jobDoc.JobIcon || 'https://cdn-icons-png.freepik.com/512/8398/8398352.png'} alt="image" className="w-36 h-38 object-fill
+            max-lg" />
         </div>
 
-        <div className="grow md:flex">
-          <div className="grow">
-            <div className="text-gray-500 text-sm">{jobDoc.orgName}</div>
-            <div className="font-bold text-lg mb-1">{jobDoc.title}</div>
+        <div className="grow">
+          <div className="grow max-md:flex max-md:flex-col max-md:justify-center max-md:items-center
+        max-md:mx-auto">
+            <div className="">
+            <Link href={`/jobs/${jobDoc.orgId}`} className="text-gray-500 text-sm
+            capitalize">{jobDoc.orgName}</Link>
+            </div>
+            <div className="font-bold text-lg mb-1">
+                <Link className='hover:underline' href={'/showJob/'+jobDoc._id}>{jobDoc.title}</Link>
+            </div>
             <div className="text-gray-400 text-sm">
                 {jobDoc.remote} &middot; {jobDoc.city}, {jobDoc.country} &middot; {jobDoc.type}
             </div>
-            <div className="text-sm font-semibold my-1 flex gap-2">
+
+            <div className="text-sm font-semibold my-[3px] gap-3
+            flex">
                 <Link href={'/jobs/edit/' + jobDoc._id}>
                 <button className="text-green-500">Edit</button>
                 </Link>
@@ -61,11 +73,20 @@ const JobRow = async ({jobDoc}: {jobDoc: job}) => {
 
                 
             </div>
-          </div>
+
+            <div className="flex flex-row items-center justify-between">
+
+                <div className=""></div>
 
             {jobDoc.createdAt && (
                  <TimeAgoFun createdAt={jobDoc.createdAt} updatedAt={jobDoc.updatedAt}/>
             )}
+            </div>
+            
+          </div>
+
+          
+            
            
             
             

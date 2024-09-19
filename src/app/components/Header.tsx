@@ -8,9 +8,9 @@ const Header = async () => {
     const signInUrl = await getSignInUrl();
 
   return (
-    <header className="">
+    <header className="mb-10">
         
-          <div className="container flex items-center justify-between mx-auto my-4">
+          <div className="flex items-center justify-between mx-auto my-4">
             <Link href={'/'} className="font-bold text-xl">Job Board</Link>
 
             <nav className="flex gap-2 items-center">
@@ -23,11 +23,6 @@ const Header = async () => {
                 <p className="mr-2 text-gray-800 text-md font-semibold">{user.firstName} {user.lastName}</p>
               )}
 
-              
-
-
-              <Link className="rounded-md py-2 px-4 bg-blue-600 text-white" href={'/new-listing'}>
-              Post a job</Link>
 
               {user && (
                 <form

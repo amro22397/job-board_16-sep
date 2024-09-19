@@ -36,14 +36,14 @@ const ImageUpload = ({JobIconImage, icon, name}: {
                         {image ? (
                           <Image src={image} alt='image' width={1024} height={1024}
                           className='w-auto h-auto max-w-24 max-h-24' />
-                        ) : JobIconImage && (
+                        ) : JobIconImage ? (
                           <Image src={JobIconImage} alt='image' width={1024} height={1024}
                           className='w-auto h-auto max-w-24 max-h-24' />
-                        )}
-
-                        {!image || !JobIconImage && (
+                        ) : (
                           <i className={`${icon} text-gray-400`}></i>
                         )}
+
+                    
                     </div>
 
                     <input type="hidden" name={name} value={image || JobIconImage} />
