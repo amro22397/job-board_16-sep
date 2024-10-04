@@ -14,7 +14,7 @@ const Hero = () => {
       flex flex-col items-center justify-center gap-4">
         <span className="text-4xl font-bold">Are you a recruiter?</span>
         <Link className="rounded-md py-2 px-4 bg-blue-600 text-white" href={'/new-listing'}>
-              Post a job</Link>
+              Post a Job</Link>
       </div>
 
       <form
