@@ -52,15 +52,16 @@ const page = async (props: PageProps) => {
         </div>
 
         
-        <div className="mt-14 bg-gray-200 p-8 w-full rounded-lg max-w-[750px] mx-auto
+        <div className="mt-14 bg-gray-200 p-8 w-full rounded-lg max-w-[80%] mx-auto
         flex flex-col max-md:justify-center max-md:items-center max-md:mx-auto
         max-md:max-w-full">
             <h3 className="font-bold mb-4 max-md:mb-6">
                 Apply by contacting us
             </h3>
 
-            <div className="flex gap-5 max-md:flex-col
-            max-md:justify-center max-md:items-center max-md:mx-auto">
+            <div className="flex gap-10 max-md:flex-col
+            max-md:justify-center max-md:items-center max-md:mx-auto
+            ">
                 <Image
                 src={jobDoc.contactPhoto || '/blank-contactphoto.png'}
                 alt={'contact Person'}
@@ -68,7 +69,7 @@ const page = async (props: PageProps) => {
                 className='w-[230px] h-[300px] object-cover object-center'
                 />
 
-                <div className="flex items-start flex-col mt-2 gap-1
+                <div className="flex items-start flex-col mt-2 gap-4
                 text-lg">
 
                     <span className="">

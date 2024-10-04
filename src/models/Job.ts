@@ -6,7 +6,7 @@ export type job = {
     city: string, countryid: string, stateid: string, cityId: string,  JobIcon: string, orgId: string, contactPhoto: string, contactName: string,
     orgName: string, contactPhone: string, contactEmail: string, description: string,
     createdAt: string, updatedAt: string, _id: string,
-    isAdmin: boolean, id: string,
+    isAdmin: boolean, id: string, userRef: string,
     __v: number
 }
 
@@ -70,6 +70,12 @@ const JobSchema = new Schema({
         type: String,
         required: true,
     },
+
+    userRef: {
+        type: String,
+        required: true,
+    },
+
 }, {timestamps: true});
 
 export async function addOrgAndUserData(jobsDocs: job[], user:User|null) {

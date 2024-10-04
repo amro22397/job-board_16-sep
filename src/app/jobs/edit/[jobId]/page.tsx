@@ -38,7 +38,8 @@ const page = async (pageProps: PageProps) => {
 
   return (
     <div>
-        <JobForm orgId={jobDoc.orgId} editJobDoc={jobDoc} />
+        <JobForm orgId={jobDoc.orgId} editJobDoc={jobDoc}
+        user={user} />
     </div>
   )
 }

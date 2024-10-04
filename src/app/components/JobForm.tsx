@@ -12,7 +12,10 @@ import { saveJobAction } from '../actions/JobActions';
 import { redirect } from 'next/navigation';
 import type { job } from '@/models/Job';
 
-const JobForm = ({editJobDoc, orgId}: {editJobDoc?: job | null,orgId: string}) => {
+const JobForm = ({editJobDoc, orgId, user}: {editJobDoc?: job | null,orgId: string, user:any}) => {
+
+    console.log(user)
+
     const [countryid, setCountryid] = useState(editJobDoc?.countryid || 0);
   const [stateid, setstateid] = useState(editJobDoc?.stateid || 0);
   const [cityId, setCityId] = useState(editJobDoc?.cityId || 0);
@@ -30,6 +33,7 @@ const JobForm = ({editJobDoc, orgId}: {editJobDoc?: job | null,orgId: string}) =
     data.set('stateid', stateid.toString());
     data.set('cityId', cityId.toString());
     data.set('orgId', orgId);
+    data.set('userRef', user.id);
     const jobDoc = await saveJobAction(data);
     redirect(`/jobs/${jobDoc.orgId}`);
   }

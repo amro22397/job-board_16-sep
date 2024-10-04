@@ -35,7 +35,11 @@ const page = async (props: PageProps) => {
     }
     
   return (
-    <JobForm editJobDoc={null} orgId={orgId} />
+    <>
+    <JobForm editJobDoc={null} orgId={orgId}
+    user={user} />
+    </>
+    
   )
 }
 

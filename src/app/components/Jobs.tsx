@@ -4,8 +4,12 @@ import React, { useState } from 'react'
 import JobRow from './JobRow'
 import { job } from '@/models/Job'
 import DeleteMessage from './DeleteMessage'
+import { getUser } from '@workos-inc/authkit-nextjs'
 
-const Jobs = ({header, jobs}: {header: string, jobs:job[]}) => {
+const Jobs = async ({header, jobs}: {header: string, jobs:job[]}) => {
+
+  const { user } = await getUser();
+
 
   return (
     <div className="bg-slate-200 py-6
@@ -22,7 +26,7 @@ const Jobs = ({header, jobs}: {header: string, jobs:job[]}) => {
     )}
 
     {jobs && jobs.map(job => (
-      <JobRow jobDoc={job} />
+      <JobRow jobDoc={job} user={user}/>
     ))}
 </div>
 

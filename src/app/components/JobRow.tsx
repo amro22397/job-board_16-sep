@@ -9,9 +9,15 @@ import mongoose from 'mongoose'
 import { revalidatePath } from 'next/cache'
 import { useRouter } from 'next/navigation'
 import DeletionButton from './DeletionButton'
+import { getUser } from '@workos-inc/authkit-nextjs'
 
+type User = {
+    id: string, object: string, email: string, emailVerified: boolean,
+    firstName: string, lastName: string, profilePictureUrl: string,
+    createdAt: string, updatedAt: string
+}
 
-const JobRow = async ({jobDoc}: {jobDoc: job}) => {
+const JobRow = ({jobDoc, user}: {jobDoc: job, user: any}) => {
 
     const route = useRouter();
 
@@ -64,16 +70,20 @@ const JobRow = async ({jobDoc}: {jobDoc: job}) => {
                 {jobDoc.remote} &middot; {jobDoc.city}, {jobDoc.country} &middot; {jobDoc.type}
             </div>
 
-            <div className="text-sm font-semibold my-[3px] gap-3
-            flex">
-                <Link href={'/jobs/edit/' + jobDoc._id}>
-                <button className="text-green-500">Edit</button>
-                </Link>
-               
-               <DeletionButton onClick={handleDelete} />
+            {jobDoc.userRef === user?.id && (
+                <div className="text-sm font-semibold my-[3px] gap-3
+                flex">
+                    <Link href={'/jobs/edit/' + jobDoc._id}>
+                    <button className="text-green-500">Edit</button>
+                    </Link>
+                   
+                   <DeletionButton onClick={handleDelete} />
+    
+                    
+                </div>
+            )}
 
-                
-            </div>
+            
 
             <div className="flex flex-row items-center justify-between">
 

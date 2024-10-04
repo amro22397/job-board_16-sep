@@ -20,8 +20,15 @@ const Header = async () => {
                 className="bg-gray-200 rounded-md py-2 px-4">Login</Link>
               )}
 
+
               {user && (
+                <>
                 <p className="mr-2 text-gray-800 text-md font-semibold">{user.firstName} {user.lastName}</p>
+                
+                <Link href={'/profile/'+user.id}
+                className='rounded-md bg-blue-600 text-white py-2 px-4
+                hidden'>Profile</Link>
+                </>
               )}
 
 
